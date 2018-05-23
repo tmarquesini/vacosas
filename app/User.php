@@ -2,9 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -26,4 +31,63 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function vacosas() {
+        return $this->hasMany('App\Vacosa', 'organizador');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function contribuicoes()
+    {
+        return $this->hasMany('App\Contribuicoes', 'participante');
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getDataDaUltimaContribuicaoAttribute()
+    {
+        return new Carbon(now());
+    }
+
+    /**
+     * @return bool
+     */
+    public function setAsAdmin()
+    {
+        $this->role = 'admin';
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function setAsUser()
+    {
+        $this->role = 'user';
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function block()
+    {
+        $this->blocked = true;
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function unblock()
+    {
+        $this->blocked = false;
+        return $this->save();
+    }
 }
