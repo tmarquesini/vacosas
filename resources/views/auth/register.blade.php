@@ -8,6 +8,12 @@
                 <div class="card-header">Cadastre-se</div>
 
                 <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
