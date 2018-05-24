@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Vacosa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class VacosasController extends Controller
 {
@@ -42,6 +44,22 @@ class VacosasController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Vacosa::class);
+
+        $this->validator($request->all())->validate();
+
+        $data = [
+            'organizador_id' => Auth::user()->id,
+            'nome' => $request->nome,
+            'valor' => $request->valor,
+            'url' => $request->url,
+            'descricao' => $request->descricao,
+        ];
+
+        if (! Vacosa::create($data)) {
+            return back()->with('error', 'Erro ao tentar iniciar vacosa!');
+        }
+
+        return response()->redirectToRoute('vacosas.index')->with('status', 'Vacosa iniciada com sucesso!');
     }
 
     /**
@@ -99,5 +117,20 @@ class VacosasController extends Controller
         return $vacosa->delete()
             ? back()->with('status', 'Vacosa excluída com sucesso!')
             : back()->with('error', 'Erro ao excluir vacosa!');
+    }
+
+    /**
+     * Get a validator for an incoming request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'valor' => 'required|numeric',
+            'url' => 'required|url',
+        ]);
     }
 }

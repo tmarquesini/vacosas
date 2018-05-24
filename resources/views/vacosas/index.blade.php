@@ -20,22 +20,26 @@
                         @endif
 
                         <table class="table table-striped">
-                            <th>
-                                <td>Nome</td>
-                                <td>Organizador</td>
-                                <td class="text-center">Valor</td>
-                                <td class="text-center">Link</td>
-                                <td class="text-center">Status</td>
-                            </th>
-                            @foreach($vacosas as $vacosa)
+                            <thead>
+                                <tr>
+                                    <td>Nome</td>
+                                    <td class="text-center">Organizador</td>
+                                    <td class="text-center">Valor</td>
+                                    <td class="text-center">Link</td>
+                                    <td class="text-center">Status</td>
+                                </th>
+                            </thead>
+                            <tbody>
+                            @foreach ($vacosas as $vacosa)
                             <tr>
-                                <td><a href="#">{{ $vacosa->nome }}</a></td>
-                                <td>{{ $vacosa->organizador->name }}</td>
+                                <td><a href="{{ route('vacosas.show', $vacosa) }}">{{ $vacosa->nome }}</a></td>
+                                <td class="text-center">{{ $vacosa->organizador->name }}</td>
                                 <td class="text-center">R$ {{ $vacosa->valor }}</td>
-                                <td class="text-center"><a href="{{ $vacosa->url }}"><i class="fa fa-link"></i></a></td>
+                                <td class="text-center"><a href="{{ $vacosa->url }}">ver site</td>
                                 <td class="text-center">{{ ucfirst($vacosa->status) }}</td>
                             </tr>
                             @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
