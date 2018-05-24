@@ -12,11 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->redirectToRoute('vacosas.index');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('vacosas', 'VacosasController');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('vacosas', 'VacosasController');
+});
