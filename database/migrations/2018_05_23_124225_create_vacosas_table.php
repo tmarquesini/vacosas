@@ -15,15 +15,15 @@ class CreateVacosasTable extends Migration
     {
         Schema::create('vacosas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('organizador');
+            $table->unsignedInteger('organizador_id');
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->double('valor');
             $table->string('url');
-            $table->enum('stauts', ['aberta', 'fechada'])->default('aberta');
+            $table->enum('status', ['aberta', 'fechada'])->default('aberta');
             $table->timestamps();
 
-            $table->foreign('organizador')
+            $table->foreign('organizador_id')
                 ->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });

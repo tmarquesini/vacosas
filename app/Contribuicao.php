@@ -22,7 +22,7 @@ class Contribuicao extends Model
      */
     public function vacosa()
     {
-        return $this->belongsTo('App\Vacosa', 'id', 'vacosa');
+        return $this->belongsTo('App\Vacosa', 'vacosa_id');
     }
 
     /**
@@ -30,6 +30,6 @@ class Contribuicao extends Model
      */
     public function participante()
     {
-        return $this->belongsTo('App\User', 'id', 'participante');
+        return $this->belongsTo('App\User', 'participante_id');
     }
 }

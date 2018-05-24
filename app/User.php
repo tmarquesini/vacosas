@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function vacosas() {
-        return $this->hasMany('App\Vacosa', 'organizador');
+        return $this->hasMany('App\Vacosa', 'organizador_id');
     }
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     public function contribuicoes()
     {
-        return $this->hasMany('App\Contribuicoes', 'participante');
+        return $this->hasMany('App\Contribuicao', 'participante_id');
     }
 
     /**

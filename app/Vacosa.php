@@ -14,21 +14,21 @@ class Vacosa extends Model
      * @var array
      */
     protected $fillable = [
-        'organizador', 'nome', 'descricao', 'valor', 'url'
+        'organizador_id', 'nome', 'descricao', 'valor', 'url'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function organizador() {
-        return $this->belongsTo('App\User', 'id', 'organizador');
+        return $this->belongsTo('App\User', 'organizador_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function participantes() {
-        return $this->hasMany('App\User', 'participante');
+    public function contribuicoes() {
+        return $this->hasMany('App\Contribuicao', 'vacosa_id');
     }
 
     /**

@@ -15,16 +15,16 @@ class CreateContribuicaosTable extends Migration
     {
         Schema::create('contribuicaos', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('vacosa');
-            $table->unsignedInteger('participante');
+            $table->unsignedInteger('vacosa_id');
+            $table->unsignedInteger('participante_id');
             $table->double('valor');
             $table->timestamps();
 
-            $table->foreign('vacosa')
+            $table->foreign('vacosa_id')
                 ->references('id')->on('vacosas')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->foreign('participante')
+            $table->foreign('participante_id')
                 ->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
