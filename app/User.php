@@ -48,6 +48,30 @@ class User extends Authenticatable
     }
 
     /**
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        if ($this->role == 'admin') {
+            return 'administrador';
+        }
+
+        return 'usuário';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        if ($this->blocked == false) {
+            return 'ativo';
+        }
+
+        return 'bloqueado';
+    }
+
+    /**
      * @return Carbon
      */
     public function getDataDaUltimaContribuicaoAttribute()
