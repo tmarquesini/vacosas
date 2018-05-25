@@ -70,6 +70,6 @@ class VacosasPolicy
      */
     public function delete(User $user, Vacosa $vacosa)
     {
-        return $vacosa->organizador->id == $user->id;
+        return false;
     }
 }
