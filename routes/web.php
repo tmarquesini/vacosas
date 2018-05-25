@@ -17,13 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('vacosas', 'VacosasController');
-    Route::group(['prefix' => 'vacosas', 'as' => 'contribuicoes.'], function() {
+    Route::group(['prefix' => 'vacosas', 'as' => 'contribuicoes.'], function () {
         Route::get('{vacosa}/contribuicoes/adicionar', 'ContribuicoesController@create')->name('create');
         Route::post('{vacosa}/contribuicoes', 'ContribuicoesController@store')->name('store');
         Route::get('{vacosa}/contribuicoes/{contribuicao}/remover', 'ContribuicoesController@confirmDestroy')->name('confirmDestroy');
         Route::delete('contribuicoes/{contribuicao}', 'ContribuicoesController@destroy')->name('destroy');
+    });
+    Route::group(['prefix' => 'usuarios', 'as' => 'users.'], function () {
+        Route::get('/', 'UsersController@index')->name('index');
+        Route::get('{user}', 'UsersController@show')->name('show');
+        Route::put('{user}/bloquear', 'UsersController@block')->name('block');
+        Route::put('{user}/desbloquear', 'UsersController@unblock')->name('unblock');
+        Route::put('{user}/setAsAdmin', 'UsersController@setAsAdmin')->name('setAsAdmin');
+        Route::put('{user}/setAsUser', 'UsersController@setAsUser')->name('setAsUser');
     });
 });
