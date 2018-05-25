@@ -61,7 +61,7 @@
                     <div class="card-body">
                         <ul>
                             @foreach($vacosa->contribuicoes as $contribuicao)
-                                <li>{{ $contribuicao->participante->name }} - R$ {{ $contribuicao->valor }} <a href="#" data-toggle="modal" data-target="#mdModal" data-url="{{ route('contribuicoes.confirmDestroy', [$vacosa, $contribuicao]) }}"><i class="fa fa-times text-danger"></i></a></li>
+                                <li>{{ $contribuicao->participante->name }} - R$ {{ $contribuicao->valor }} @if ((Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id))<a href="#" data-toggle="modal" data-target="#mdModal" data-url="{{ route('contribuicoes.confirmDestroy', [$vacosa, $contribuicao]) }}"><i class="fa fa-times text-danger"></i></a>@endif</li>
                             @endforeach
                         </ul>
                     </div>
