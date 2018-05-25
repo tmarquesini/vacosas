@@ -112,6 +112,10 @@ class UsersController extends Controller
     {
         $this->authorize('setType', $user);
 
+        if ($user->role == 'admin' && User::where('role', 'admin')->get()->count() == 1) {
+            return back()->with('error', 'Não é possível tornar o último administrador usuário.');
+        }
+
         return $user->setAsUser()
             ? back()->with('status', 'Tipo do usuário modificado')
             : back()->with('error', 'Erro ao modificar o tipo do usuário');
