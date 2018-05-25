@@ -71,7 +71,7 @@ class VacosasController extends Controller
      */
     public function show(Vacosa $vacosa)
     {
-        $this->authorize('view', Vacosa::class);
+        $this->authorize('view', $vacosa);
 
         return view('vacosas.show', compact('vacosa'));
     }
@@ -85,9 +85,9 @@ class VacosasController extends Controller
      */
     public function edit(Vacosa $vacosa)
     {
-        $this->authorize('update', Vacosa::class);
+        $this->authorize('update', $vacosa);
 
-        return view('vacosa.edit', compact('vacosa'));
+        return view('vacosas.edit', compact('vacosa'));
     }
 
     /**
@@ -100,7 +100,17 @@ class VacosasController extends Controller
      */
     public function update(Request $request, Vacosa $vacosa)
     {
-        $this->authorize('update', Vacosa::class);
+        $this->authorize('update', $vacosa);
+
+        $vacosa->fill($request->all());
+
+        if (! $vacosa->save()) {
+            return response()->redirectToRoute('vacosas.show', $vacosa)
+                ->with('error', 'Erro ao editar vacosa!');
+        }
+
+        return response()->redirectToRoute('vacosas.show', $vacosa)
+            ->with('status', 'Vacosa editada com sucesso!');
     }
 
     /**
@@ -112,11 +122,15 @@ class VacosasController extends Controller
      */
     public function destroy(Vacosa $vacosa)
     {
-        $this->authorize('delete', Vacosa::class);
+        $this->authorize('delete', $vacosa);
 
-        return $vacosa->delete()
-            ? back()->with('status', 'Vacosa excluída com sucesso!')
-            : back()->with('error', 'Erro ao excluir vacosa!');
+        if (! $vacosa->delete()) {
+            return response()->redirectToRoute('vacosas.index')
+                ->with('error', 'Erro ao excluir vacosa!');
+        }
+
+        return response()->redirectToRoute('vacosas.index')
+            ->with('status', 'Vacosa excluída com sucesso!');
     }
 
     /**
