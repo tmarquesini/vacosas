@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
-            $table->boolean('blocked')->default('true');
+            $table->boolean('blocked')->default(true);
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
