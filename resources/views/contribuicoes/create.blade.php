@@ -27,7 +27,7 @@
                 <label for="nome" class="col-md-4 col-form-label text-md-right">Valor</label>
 
                 <div class="col-md-6">
-                    <input id="nome" type="text" class="form-control" name="valor" required>
+                    <input id="nome" type="number" min="10" class="form-control" name="valor" value="10" required>
                 </div>
             </div>
 

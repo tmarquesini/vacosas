@@ -54,6 +54,20 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="contribuicao" class="col-md-4 col-form-label text-md-right">Contribuição</label>
+
+                                <div class="col-md-6">
+                                    <input id="contribuicao" type="number" min="20" class="form-control{{ $errors->has('contribuicao') ? ' is-invalid' : '' }}" name="contribuicao" value="{{ old('contribuicao') ? old('contribuicao') : 20 }}" required>
+
+                                    @if ($errors->has('contribuicao'))
+                                        <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('contribuicao') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="url" class="col-md-4 col-form-label text-md-right">URL</label>
 
                                 <div class="col-md-6">

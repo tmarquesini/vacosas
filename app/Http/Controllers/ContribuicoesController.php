@@ -86,7 +86,7 @@ class ContribuicoesController extends Controller
         return Validator::make($data, [
             'vacosa_id' => 'required|exists:vacosa.id',
             'participante_id' => 'required|exists:user.id',
-            'valor' => 'required|numeric',
+            'valor' => 'required|numeric|min:10',
         ]);
     }
 }

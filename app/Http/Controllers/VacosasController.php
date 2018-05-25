@@ -55,9 +55,16 @@ class VacosasController extends Controller
             'descricao' => $request->descricao,
         ];
 
-        if (! Vacosa::create($data)) {
+        $vacosa = Vacosa::create($data);
+
+        if (! $vacosa) {
             return back()->with('error', 'Erro ao tentar iniciar vacosa!');
         }
+
+        $vacosa->contribuicoes()->create([
+            'participante_id' => $vacosa->organizador->id,
+            'valor' => $request->contribuicao,
+        ]);
 
         return response()->redirectToRoute('vacosas.index')->with('status', 'Vacosa iniciada com sucesso!');
     }
@@ -144,6 +151,7 @@ class VacosasController extends Controller
         return Validator::make($data, [
             'nome' => 'required|string|max:255',
             'valor' => 'required|numeric',
+            'contribuicao' => 'required|numeric|min:20',
             'url' => 'required|url',
         ]);
     }
