@@ -72,11 +72,29 @@ class User extends Authenticatable
     }
 
     /**
-     * @return Carbon
+     * @return int
+     */
+    public function getTotalContribuidoAttribute()
+    {
+        $total = 0;
+
+        foreach ($this->contribuicoes as $contribuicao) {
+            $total += $contribuicao->valor;
+        }
+
+        return $total;
+    }
+
+    /**
+     * @return mixed
      */
     public function getDataDaUltimaContribuicaoAttribute()
     {
-        return new Carbon(now());
+        if (! $this->contribuicoes->last()) {
+            return '';
+        }
+
+        return $this->contribuicoes->last()->created_at->format('d/m/Y');
     }
 
     /**

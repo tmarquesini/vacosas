@@ -32,6 +32,20 @@ class Vacosa extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getTotalArrecadadoAttribute()
+    {
+        $total = 0;
+
+        foreach ($this->contribuicoes as $contribuicao) {
+            $total += $contribuicao->valor;
+        }
+
+        return $total;
+    }
+
+    /**
      * @return bool
      */
     public function fechar()

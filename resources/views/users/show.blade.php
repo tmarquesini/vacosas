@@ -53,6 +53,9 @@
                         <p><strong>Telefone:</strong> {{ $user->phone }}</p>
                         <p><strong>Tipo:</strong> {{ ucfirst($user->type) }}</p>
                         <p><strong>Status:</strong> {{ ucfirst($user->status) }}</p>
+                        <p><strong>Última contribuição:</strong> {{ $user->dataDaUltimaContribuicao }}</p>
+                        <p><strong>Número de contribuições:</strong> {{ $user->contribuicoes->count() }}</p>
+                        <p><strong>Total contribuído:</strong> R$ {{ $user->totalContribuido }}</p>
                     </div>
                 </div>
             </div>

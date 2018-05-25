@@ -25,6 +25,7 @@
                                     <td>Nome</td>
                                     <td class="text-center">Organizador</td>
                                     <td class="text-center">Valor</td>
+                                    <td class="text-center">Total arrecadado</td>
                                     <td class="text-center">Link</td>
                                     <td class="text-center">Status</td>
                                 </th>
@@ -35,7 +36,8 @@
                                 <td><a href="{{ route('vacosas.show', $vacosa) }}">{{ $vacosa->nome }}</a></td>
                                 <td class="text-center">{{ $vacosa->organizador->name }}</td>
                                 <td class="text-center">R$ {{ $vacosa->valor }}</td>
-                                <td class="text-center"><a href="{{ $vacosa->url }}">ver site</td>
+                                <td class="text-center">R$ {{ $vacosa->totalArrecadado }}</td>
+                                <td class="text-center"><a href="{{ $vacosa->url }}" target="_blank"><i class="fa fa-link"></i></td>
                                 <td class="text-center">{{ ucfirst($vacosa->status) }}</td>
                             </tr>
                             @endforeach

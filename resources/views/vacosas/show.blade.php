@@ -44,6 +44,7 @@
                         <p><strong>Organizador:</strong> {{ $vacosa->organizador->name }}</p>
                         <p><strong>Nome:</strong> {{ $vacosa->nome }} <small>[<a href="{{ $vacosa->url }}" target="_blank">site</a>]</small></p>
                         <p><strong>Valor:</strong> R$ {{ $vacosa->valor }}</p>
+                        <p><strong>Total arrecadado:</strong> R$ {{ $vacosa->totalArrecadado }}</p>
                         <p><strong>Descrição:</strong> {{ $vacosa->descricao }}</p>
                     </div>
                 </div>

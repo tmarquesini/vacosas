@@ -25,9 +25,10 @@
                                     <td>Nome</td>
                                     <td class="text-center">E-mail</td>
                                     <td class="text-center">Telefone</td>
+                                    <td class="text-center">Última contribuição</td>
                                     <td class="text-center">Tipo</td>
                                     <td class="text-center">Status</td>
-                                </th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach ($users as $user)
@@ -35,6 +36,7 @@
                                 <td><a href="{{ route('users.show', $user) }}">{{ $user->name }}</a></td>
                                 <td class="text-center">{{ $user->email }}</td>
                                 <td class="text-center">{{ $user->phone }}</td>
+                                <td class="text-center">{{ $user->dataDaUltimaContribuicao }}</td>
                                 <td class="text-center">{{ ucfirst($user->type) }}</td>
                                 <td class="text-center">{{ ucfirst($user->status) }}</td>
                             </tr>
