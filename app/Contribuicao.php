@@ -11,10 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 class Contribuicao extends Model
 {
     /**
+     * @var string
+     */
+    protected $table = 'contribuicoes';
+
+    /**
      * @var array
      */
     protected $fillable = [
-        'vacosa', 'participante', 'valor'
+        'vacosa_id', 'participante_id', 'valor'
     ];
 
     /**
