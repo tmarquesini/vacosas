@@ -49,7 +49,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">Telefone</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
+                                <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"  name="phone" value="{{ old('phone') }}" required>
 
                                 @if ($errors->has('phone'))
                                     <span class="invalid-feedback">
@@ -94,4 +94,22 @@
         </div>
     </div>
 </div>
+    @push('scripts')
+        <script type="application/javascript">
+            $(document).ready(function() {
+
+                var SPMaskBehavior = function (val) {
+                        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    },
+                    spOptions = {
+                        onKeyPress: function(val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        }
+                    };
+
+                $('#phone').mask(SPMaskBehavior, spOptions);
+
+            });
+        </script>
+    @endpush
 @endsection

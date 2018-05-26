@@ -55,7 +55,7 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         return $this->registered($request, $user)
-            ?: back()->with('status', 'Cadastro efetuado!<br>Aguarde até que um moderador aprove sua participação.');;
+            ?: back()->with('status', 'Cadastro efetuado! Aguarde até que um moderador aprove sua participação.');
     }
 
     /**

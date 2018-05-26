@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Emadadly\LaravelUuid\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Vacosa extends Model
 {
+    use Uuids;
     /**
      * @var array
      */

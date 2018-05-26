@@ -18,9 +18,9 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-
-                        <table class="table table-striped">
-                            <thead>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
                                     <td>Nome</td>
                                     <td class="text-center">Organizador</td>
@@ -28,21 +28,41 @@
                                     <td class="text-center">Total arrecadado</td>
                                     <td class="text-center">Link</td>
                                     <td class="text-center">Status</td>
-                                </th>
-                            </thead>
-                            <tbody>
-                            @foreach ($vacosas as $vacosa)
-                            <tr>
-                                <td><a href="{{ route('vacosas.show', $vacosa) }}">{{ $vacosa->nome }}</a></td>
-                                <td class="text-center">{{ $vacosa->organizador->name }}</td>
-                                <td class="text-center">R$ {{ $vacosa->valor }}</td>
-                                <td class="text-center">R$ {{ $vacosa->totalArrecadado }}</td>
-                                <td class="text-center"><a href="{{ $vacosa->url }}" target="_blank"><i class="fa fa-link"></i></td>
-                                <td class="text-center">{{ ucfirst($vacosa->status) }}</td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($vacosas as $vacosa)
+                                    <tr>
+                                        <td style="vertical-align: middle"><a
+                                                    href="{{ route('vacosas.show', $vacosa->uuid) }}">{{ $vacosa->nome }}</a>
+                                        </td>
+                                        <td style="vertical-align: middle"
+                                            class="text-center">{{ $vacosa->organizador->name }}</td>
+                                        <td style="vertical-align: middle" class="text-center">
+                                            R$ {{ $vacosa->valor }}</td>
+                                        <td style="vertical-align: middle" class="text-center">
+                                            R$ {{ $vacosa->totalArrecadado }}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar"
+                                                     style="width: {{\App\Helpers\Functions::percent($vacosa->totalArrecadado,$vacosa->valor)}}%;"
+                                                     aria-valuenow="{{\App\Helpers\Functions::percent($vacosa->totalArrecadado,$vacosa->valor)}}"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">{{\App\Helpers\Functions::percent($vacosa->totalArrecadado,$vacosa->valor)}}
+                                                    %
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle" class="text-center"><a
+                                                    href="{{ $vacosa->url }}" target="_blank"><i class="fa fa-link"></i>
+                                        </td>
+                                        <td style="vertical-align: middle"
+                                            class="text-center">{!! \App\Helpers\Functions::status($vacosa->status) !!}</td>
+                                    </tr>
+
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

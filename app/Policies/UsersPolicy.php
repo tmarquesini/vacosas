@@ -58,7 +58,7 @@ class UsersPolicy
      */
     public function delete(User $user, User $model)
     {
-        return false;
+        return true;
     }
 
     /**

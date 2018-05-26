@@ -13,6 +13,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.mask.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -46,9 +47,9 @@
                             <li><a class="nav-link" href="{{ route('login') }}">Entrar</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">Cadastre-se</a></li>
                         @else
-                            <li><a class="nav-link" href="{{ route('vacosas.create') }}"><i class="fa fa-plus"></i> Iniciar uma vacosa</a></li>
-                            <li><a class="nav-link" href="{{ route('vacosas.index') }}"><i class="fa fa-money-bill-alt"></i> Vacosas</a></li>
-                            <li><a class="nav-link" href="{{ route('users.index') }}"><i class="fa fa-users"></i> Usuários</a></li>
+                            <li><a class="btn @if(Route::is("vacosas.create")) btn-secondary @else btn-light @endif" style="margin-right: 10px" href="{{ route('vacosas.create') }}"><i class="fa fa-plus"></i> Iniciar uma vacosa</a></li>
+                            <li><a class="btn @if(Route::is("vacosas.index")) btn-secondary @else btn-light @endif"  style="margin-right: 10px" href="{{ route('vacosas.index') }}"><i class="fa fa-money-bill-alt"></i> Vacosas</a></li>
+                            <li><a class="btn @if(Route::is("users.*")) btn-secondary @else btn-light @endif" href="{{ route('users.index') }}"><i class="fa fa-users"></i> Usuários</a></li>
                             <li>
                                 <a class="nav-link" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -70,5 +71,6 @@
             @yield('content')
         </main>
     </div>
+@stack("scripts")
 </body>
 </html>

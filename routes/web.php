@@ -33,5 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('{user}/desbloquear', 'UsersController@unblock')->name('unblock');
         Route::put('{user}/setAsAdmin', 'UsersController@setAsAdmin')->name('setAsAdmin');
         Route::put('{user}/setAsUser', 'UsersController@setAsUser')->name('setAsUser');
+        Route::delete('delete/{user}', 'UsersController@destroy')->name('destroy');
     });
 });

@@ -31,8 +31,9 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function show(User $user)
+    public function show($uuid)
     {
+        $user = User::uuid($uuid);
         $this->authorize('view', $user);
 
         return view('users.show', compact('user'));
@@ -47,6 +48,24 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         //
+    } /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($uuid)
+    {
+        $user = User::uuid($uuid);
+        $this->authorize('delete', $user);
+
+        if (!$user->delete()) {
+            return response()->redirectToRoute('users.index')
+                ->with('error', 'Erro ao excluir!');
+        }
+
+        return response()->redirectToRoute('users.index')
+            ->with('status', 'Usuário excluído com sucesso!');
     }
 
     /**

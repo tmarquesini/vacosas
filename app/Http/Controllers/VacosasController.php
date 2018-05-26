@@ -76,8 +76,10 @@ class VacosasController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Vacosa $vacosa)
+    public function show($uuid)
     {
+
+        $vacosa = Vacosa::uuid($uuid);
         $this->authorize('view', $vacosa);
 
         return view('vacosas.show', compact('vacosa'));

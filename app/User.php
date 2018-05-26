@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Emadadly\LaravelUuid\Uuids;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Uuids;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +32,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $dates =['dataDaUltimaContribuicao'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -57,6 +60,24 @@ class User extends Authenticatable
         }
 
         return 'usuário';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneAttribute($number)
+    {
+        $number="(".substr($number,0,2).") ".substr($number,2,-4)." - ".substr($number,-4);
+        // primeiro substr pega apenas o DDD e coloca dentro do (), segundo subtr pega os números do 3º até faltar 4, insere o hifem, e o ultimo pega apenas o 4 ultimos digitos
+        return $number;
+    }
+/**
+     * @return string
+     */
+    public function setPhoneAttribute($value)
+    {
+        $tel = preg_replace("/[^0-9]/", "", $value);
+        $this->attributes['phone'] = $tel;
     }
 
     /**
@@ -94,7 +115,7 @@ class User extends Authenticatable
             return '';
         }
 
-        return $this->contribuicoes->last()->created_at->format('d/m/Y');
+        return $this->contribuicoes->last()->created_at;
     }
 
     /**

@@ -41,11 +41,11 @@ class ContribuicoesController extends Controller
         ];
 
         if (! Contribuicao::create($data)) {
-            return response()->redirectToRoute('vacosas.show', $vacosa)
+            return response()->redirectToRoute('vacosas.show', $vacosa->uuid)
                 ->with('error', 'Erro ao tentar adicionar contribuição!');
         }
 
-        return response()->redirectToRoute('vacosas.show', $vacosa)
+        return response()->redirectToRoute('vacosas.show', $vacosa->uuid)
             ->with('status', 'Contribuição adicionada com sucesso!');
     }
 
@@ -67,11 +67,11 @@ class ContribuicoesController extends Controller
     public function destroy(Contribuicao $contribuicao)
     {
         if (! $contribuicao->delete()) {
-            return response()->redirectToRoute('vacosas.show', $vacosa)
+            return response()->redirectToRoute('vacosas.show', $vacosa->uuid)
                 ->with('error', 'Erro ao excluir contribuição!');
         }
 
-        return response()->redirectToRoute('vacosas.show', $vacosa)
+        return response()->redirectToRoute('vacosas.show', $vacosa->uuid)
             ->with('status', 'Contribuição excluída com sucesso!');
     }
 
