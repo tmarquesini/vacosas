@@ -14,8 +14,17 @@ class AddUuidToVacosasTable extends Migration
     public function up()
     {
         Schema::table('vacosas', function (Blueprint $table) {
-            $table->uuid("uuid");
+            $table->uuid("uuid")->default('0');
         });
+
+        // Adiciona o UUID aos registros já cadastrados
+        $vacosas = \App\Vacosa::all();
+        foreach ($vacosas as $vacosa) {
+            if ($vacosa->uuid == "" ) {
+                $vacosa->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                $vacosa->save();
+            }
+        }
     }
 
     /**

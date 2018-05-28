@@ -14,9 +14,17 @@ class AddUuidToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->uuid("uuid");
-
+            $table->uuid("uuid")->default('0');
         });
+
+        // Adiciona UUID aos registros já cadastrados
+        $users = \App\User::all();
+        foreach ($users as $user) {
+            if ($user->uuid == "" ) {
+                $user->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                $user->save();
+            }
+        }
     }
 
     /**
