@@ -47,7 +47,7 @@
                                 @else
                                     <a href="#" onclick="definirComoAdmin()" class="text-primary">tornar administrador</a>
                                 @endif
-                                @if($user->uuid != auth()->user()->uuid && $user->vacosas->count == 0 && $user->contribuicoes->count() == 0)
+                                @if($user->uuid != auth()->user()->uuid && $user->vacosas->count() == 0 && $user->contribuicoes->count() == 0)
                                     | <a href="" data-toggle="modal" data-target="#mdDeleteModal"  class="text-danger">remover</a>
                                 @endif
                             </span>
