@@ -23,7 +23,7 @@ class AddUuidToUsersTable extends Migration
             ->get();
         foreach ($users as $user) {
                 \Illuminate\Support\Facades\DB::table('users')
-                    ->when('id', $user->id)
+                    ->where('id', $user->id)
                     ->update([
                         'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString()
                     ]);
