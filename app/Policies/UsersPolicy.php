@@ -58,7 +58,7 @@ class UsersPolicy
      */
     public function delete(User $user, User $model)
     {
-        return true;
+        return $model->vacosas->count == 0 && $model->contribuicoes->count() == 0;
     }
 
     /**

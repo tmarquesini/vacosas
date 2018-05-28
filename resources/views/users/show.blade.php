@@ -47,9 +47,9 @@
                                 @else
                                     <a href="#" onclick="definirComoAdmin()" class="text-primary">tornar administrador</a>
                                 @endif
-                                @if($user->uuid != auth()->user()->uuid)
-                                        | <a href="" data-toggle="modal" data-target="#mdDeleteModal"  class="text-danger">excluír</a>
-                                    @endif
+                                @if($user->uuid != auth()->user()->uuid && $user->vacosas->count == 0 && $user->contribuicoes->count() == 0)
+                                    | <a href="" data-toggle="modal" data-target="#mdDeleteModal"  class="text-danger">remover</a>
+                                @endif
                             </span>
                         @endif
                     </div>
@@ -59,7 +59,7 @@
                         <p><strong>Telefone:</strong> {{ $user->phone }}</p>
                         <p><strong>Tipo:</strong> {{ ucfirst($user->type) }}</p>
                         <p><strong>Status:</strong> {!! \App\Helpers\Functions::statusUsers($user->status) !!}</p>
-                        <p><strong>Última contribuição:</strong> {{ $user->dataDaUltimaContribuicao->format("d/m/Y") }}</p>
+                        <p><strong>Última contribuição:</strong> {{ is_a($user->dataDaUltimaContribuicao, Carbon\Carbon::class) ? $user->dataDaUltimaContribuicao->format('d/m/Y') : 'Sem contribuições' }}</p>
                         <p><strong>Número de contribuições:</strong> {{ $user->contribuicoes->count() }}</p>
                         <p><strong>Total contribuído:</strong> R$ {{ $user->totalContribuido }}</p>
                     </div>
