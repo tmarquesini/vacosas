@@ -55,4 +55,16 @@ class Vacosa extends Model
         $this->status = 'fechada';
         return $this->save();
     }
+
+    /**
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        if ($this->getTotalArrecadadoAttribute() >= $this->valor) {
+            return 'fechada';
+        }
+
+        return 'aberta';
+    }
 }
