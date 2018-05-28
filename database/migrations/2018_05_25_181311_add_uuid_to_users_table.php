@@ -18,12 +18,15 @@ class AddUuidToUsersTable extends Migration
         });
 
         // Adiciona UUID aos registros já cadastrados
-        $users = \App\User::all();
+        $users = \Illuminate\Support\Facades\DB::table('users')
+            ->where('uuid', '0')
+            ->get();
         foreach ($users as $user) {
-            if ($user->uuid == "" ) {
-                $user->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-                $user->save();
-            }
+                \Illuminate\Support\Facades\DB::table('users')
+                    ->when('id', $user->id)
+                    ->update([
+                        'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString()
+                    ]);
         }
     }
 

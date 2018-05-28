@@ -18,12 +18,15 @@ class AddUuidToVacosasTable extends Migration
         });
 
         // Adiciona o UUID aos registros já cadastrados
-        $vacosas = \App\Vacosa::all();
+        $vacosas = \Illuminate\Support\Facades\DB::table('vacosas')
+            ->where('uuid', '0')
+            ->get();
         foreach ($vacosas as $vacosa) {
-            if ($vacosa->uuid == "" ) {
-                $vacosa->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-                $vacosa->save();
-            }
+                \Illuminate\Support\Facades\DB::table('vacosas')
+                    ->where('id', $vacosa->id)
+                    ->update([
+                        'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString()
+                    ]);
         }
     }
 
