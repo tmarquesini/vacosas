@@ -20,7 +20,7 @@ class ContribuicoesController extends Controller
      */
     public function create(Vacosa $vacosa)
     {
-        $users = User::all();
+        $users = User::orderBy('name')->get();
 
         return view('contribuicoes.create', compact(['vacosa', 'users']));
     }
