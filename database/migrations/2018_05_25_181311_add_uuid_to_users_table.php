@@ -20,7 +20,7 @@ class AddUuidToUsersTable extends Migration
         // Adiciona UUID aos registros já cadastrados
         $users = \App\User::all();
         foreach ($users as $user) {
-            if ($user->uuid == "" ) {
+            if ($user->uuid == '0' ) {
                 $user->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                 $user->save();
             }
