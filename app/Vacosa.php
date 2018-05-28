@@ -19,6 +19,16 @@ class Vacosa extends Model
         'organizador_id', 'nome', 'descricao', 'valor', 'url'
     ];
 
+    public function scopeAbertas($q)
+    {
+        return $q->where("status","aberta")->orderBy('created_at', 'desc');
+    }
+
+    public function scopeFechadas($q)
+    {
+        return $q->where("status", "fechada")->orderBy('created_at', 'desc');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

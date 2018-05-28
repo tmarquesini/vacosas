@@ -16,8 +16,14 @@ class VacosasController extends Controller
      */
     public function index()
     {
-        $vacosas = Vacosa::orderBy('created_at', 'desc')->get();
+        $vacosas = Vacosa::abertas()->get();
 
+        return view('vacosas.index', compact('vacosas'));
+    }
+
+    public function fechadas()
+    {
+        $vacosas = Vacosa::fechadas()->get();
         return view('vacosas.index', compact('vacosas'));
     }
 
@@ -57,7 +63,7 @@ class VacosasController extends Controller
 
         $vacosa = Vacosa::create($data);
 
-        if (! $vacosa) {
+        if (!$vacosa) {
             return back()->with('error', 'Erro ao tentar iniciar vacosa!');
         }
 
@@ -113,7 +119,7 @@ class VacosasController extends Controller
 
         $vacosa->fill($request->all());
 
-        if (! $vacosa->save()) {
+        if (!$vacosa->save()) {
             return response()->redirectToRoute('vacosas.show', $vacosa)
                 ->with('error', 'Erro ao editar vacosa!');
         }
@@ -133,7 +139,7 @@ class VacosasController extends Controller
     {
         $this->authorize('delete', $vacosa);
 
-        if (! $vacosa->delete()) {
+        if (!$vacosa->delete()) {
             return response()->redirectToRoute('vacosas.index')
                 ->with('error', 'Erro ao excluir vacosa!');
         }
@@ -145,7 +151,7 @@ class VacosasController extends Controller
     /**
      * Get a validator for an incoming request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)

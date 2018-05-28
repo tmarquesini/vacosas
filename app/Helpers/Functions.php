@@ -26,9 +26,10 @@ class Functions
     public static function status($status)
     {
 
+
         if ($status == "aberta") {
             $st = '<span class="badge badge-success">Aberta</span>';
-        }else{
+        }elseif($status == "fechada"){
             $st = '<span class="badge badge-danger">Fechada</span>';
         }
 

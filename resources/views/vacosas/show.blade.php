@@ -14,18 +14,18 @@
                 </div>
             </div>
         @endif
-            @if (session('error'))
-                <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            {{ session('error') }}
-                        </div>
+        @if (session('error'))
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ session('error') }}
                     </div>
                 </div>
-            @endif
+            </div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -33,18 +33,23 @@
                         Vacosa
                         @if (Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id)
                             <span style="float: right">
-                                <a href="#" data-toggle="modal" data-target="#mdModal" data-url="{{ route('vacosas.edit', $vacosa) }}">editar</a>
+                                <a href="#" data-toggle="modal" data-target="#mdModal"
+                                   data-url="{{ route('vacosas.edit', $vacosa) }}">editar</a>
                                 @if (Auth::user()->role == 'admin')
-                                 | <a href="#" data-toggle="modal" data-target="#mdDeleteModal" class="text-danger">remover</a>
+                                    | <a href="#" data-toggle="modal" data-target="#mdDeleteModal" class="text-danger">remover</a>
                                 @endif
                             </span>
                         @endif
                     </div>
                     <div class="card-body">
                         <p><strong>Organizador:</strong> {{ $vacosa->organizador->name }}</p>
-                        <p><strong>Nome:</strong> {{ $vacosa->nome }} <small>[<a href="{{ $vacosa->url }}" target="_blank">site</a>]</small></p>
+                        <p><strong>Nome:</strong> {{ $vacosa->nome }}
+                            <small>[<a href="{{ $vacosa->url }}" target="_blank">site</a>]</small>
+                        </p>
                         <p><strong>Valor:</strong> R$ {{ $vacosa->valor }}</p>
                         <p><strong>Total arrecadado:</strong> R$ {{ $vacosa->totalArrecadado }}</p>
+                        <p><strong>Faltando:</strong> R$ {{ $vacosa->valor - $vacosa->totalArrecadado }}</p>
+                        <p><strong>Status:</strong> {!! \App\Helpers\Functions::status($vacosa->status) !!}</p>
                         <p><strong>Descrição:</strong> {{ $vacosa->descricao }}</p>
                     </div>
                 </div>
@@ -53,16 +58,21 @@
                 <div class="card">
                     <div class="card-header">
                         Contribuições
-                        @if ((Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id))
+                        @if ((Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id) && $vacosa->status=="aberta")
                             <span style="float: right">
-                                <a href="#" data-toggle="modal" data-target="#mdModal" data-url="{{ route('contribuicoes.create', $vacosa) }}">adicionar</a>
+                                <a href="#" data-toggle="modal" data-target="#mdModal"
+                                   data-url="{{ route('contribuicoes.create', $vacosa) }}">adicionar</a>
                             </span>
                         @endif
                     </div>
                     <div class="card-body">
                         <ul>
                             @foreach($vacosa->contribuicoes as $contribuicao)
-                                <li>{{ $contribuicao->participante->name }} - R$ {{ $contribuicao->valor }} @if ((Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id))<a href="#" data-toggle="modal" data-target="#mdModal" data-url="{{ route('contribuicoes.confirmDestroy', [$vacosa, $contribuicao]) }}"><i class="fa fa-times text-danger"></i></a>@endif</li>
+                                <li>{{ $contribuicao->participante->name }} -
+                                    R$ {{ $contribuicao->valor }} @if ((Auth::user()->role == 'admin' || $vacosa->organizador->id == Auth::user()->id) && $vacosa->status=="aberta")
+                                        <a href="#" data-toggle="modal" data-target="#mdModal"
+                                           data-url="{{ route('contribuicoes.confirmDestroy', [$vacosa, $contribuicao]) }}"><i
+                                                    class="fa fa-times text-danger"></i></a> @endif</li>
                             @endforeach
                         </ul>
                     </div>
@@ -82,7 +92,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Remover vacosa</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     Deseja realmente remover esta vacosa?
