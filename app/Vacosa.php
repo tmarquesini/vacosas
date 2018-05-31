@@ -19,11 +19,19 @@ class Vacosa extends Model
         'organizador_id', 'nome', 'descricao', 'valor', 'url'
     ];
 
+    /**
+     * @param $q
+     * @return mixed
+     */
     public function scopeAbertas($q)
     {
         return $q->where("status","aberta")->orderBy('created_at', 'desc');
     }
 
+    /**
+     * @param $q
+     * @return mixed
+     */
     public function scopeFechadas($q)
     {
         return $q->where("status", "fechada")->orderBy('created_at', 'desc');
@@ -64,17 +72,5 @@ class Vacosa extends Model
     {
         $this->status = 'fechada';
         return $this->save();
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatusAttribute()
-    {
-        if ($this->getTotalArrecadadoAttribute() >= $this->valor) {
-            return 'fechada';
-        }
-
-        return 'aberta';
     }
 }
