@@ -5,7 +5,15 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Vacosas</div>
+                    <div class="card-header">Vacosas @if(Route::is("vacosas.fechadas")) fechadas @else abertas @endif
+
+                        <span style="float: right">
+                            @if(Route::is("vacosas.fechadas"))
+                                <a href="{{ route('vacosas.index') }}">Ver vacosas abertas</a>
+                            @else
+                                <a href="{{ route('vacosas.fechadas') }}" class="text-danger">Ver vacosas fechadas</a>
+                            @endif
+                            </span></div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -53,7 +61,7 @@
                                             </div>
                                         </td>
                                         <td style="vertical-align: middle" class="text-center"><a
-                                                    href="{{ $vacosa->url }}" target="_blank"><i class="fa fa-link"></i>
+                                                    href="{{ $vacosa->url }}" target="_blank"><i class="fa fa-link"></i></a>
                                         </td>
                                         <td style="vertical-align: middle"
                                             class="text-center">{!! \App\Helpers\Functions::status($vacosa->status) !!}</td>

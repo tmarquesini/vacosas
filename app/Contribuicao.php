@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Observables\ContribuicaoObservable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
